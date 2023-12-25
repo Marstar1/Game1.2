@@ -1,4 +1,5 @@
 import pygame
+import menu2
 
 
 class Hero:
@@ -46,25 +47,22 @@ class Hero:
                            pygame.transform.scale(pygame.image.load('Image/Hero/f40.png').convert_alpha(), (250, 300))]
         self.window = window
         self.image = self.move_right[self.index]
-        self.rect = self.image.get_rect(center=(300, 490))
+        self.rect = self.image.get_rect(center=(300, 590))
         self.speed = 4
         self.health = 3
 
     def update(self):
-        keys = pygame.key.get_pressed()
-        self.image = self.move_right[self.index // 8]
-        self.rect.x += self.speed
-        self.speed = 0
-        if keys[pygame.K_RIGHT]:
+
+        if menu2.game_state == "level1" or menu2.game_state == "level2" or menu2.game_state == "level0":
             self.image = self.move_right[self.index // 8]
             self.rect.x += self.speed
-        if keys[pygame.K_LEFT] and self.rect.x > 0:
+            self.speed = 0
+
+        if menu2.game_state == "level3":
             self.image = self.move_left[self.index // 8]
-            self.rect.x -= self.speed
-        if keys[pygame.K_UP] and self.rect.y > 250.:
-            self.rect.y -= self.speed
-        if keys[pygame.K_DOWN] and self.rect.y < 370:
-            self.rect.y += self.speed
+            self.rect.x += self.speed
+            self.speed = 0
+
         if self.index < 80:
             self.index += 1
         else:
